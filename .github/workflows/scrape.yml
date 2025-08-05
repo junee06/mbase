@@ -1,39 +1,39 @@
-name: Scrape MDL Batches
+# name: Scrape MDL Batches
 
-on:
-  workflow_dispatch:
-  schedule:
-    # Run every 3 hours
-    - cron: '0 */3 * * *'
+# on:
+#   workflow_dispatch:
+#   schedule:
+#     # Run every 3 hours
+#     - cron: '0 */3 * * *'
 
-permissions:
-  contents: write  # <-- This is what grants push access
+# permissions:
+#   contents: write  # <-- This is what grants push access
 
-jobs:
-  scrape:
-    runs-on: ubuntu-latest
-    timeout-minutes: 355 # just under 6 hrs (GitHub limit)
+# jobs:
+#   scrape:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 355 # just under 6 hrs (GitHub limit)
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout repo
+#         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.11
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: 3.11
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+#       - name: Install dependencies
+#         run: pip install -r requirements.txt
 
-      - name: Run scraper
-        run: python scraper.py
+#       - name: Run scraper
+#         run: python scraper.py
 
-      - name: Commit output and logs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#       - name: Commit output and logs
+#         run: |
+#           git config user.name "github-actions[bot]"
+#           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add data/*.json progress.json failed_slugs.log || true
-          git commit -m "Add scraped batch and failed slugs log" || echo "Nothing to commit"
-          git push
+#           git add data/*.json progress.json failed_slugs.log || true
+#           git commit -m "Add scraped batch and failed slugs log" || echo "Nothing to commit"
+#           git push
